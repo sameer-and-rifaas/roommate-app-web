@@ -15,10 +15,10 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
   let rifaasUnsettled = 0;
   let sameerTotalSpent = 0;
   let rifaasTotalSpent = 0;
-  
+
   // Category splits
   const categoryTotals = { Rent: 0, Food: 0, Groceries: 0, Travel: 0, Others: 0 };
-  
+
   expenses.forEach(exp => {
     // Lifetime spent
     if (exp.paidBy === 'Sameer') sameerTotalSpent += exp.amount;
@@ -29,7 +29,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
       if (exp.paidBy === 'Sameer') sameerUnsettled += exp.amount;
       else rifaasUnsettled += exp.amount;
     }
-    
+
     // Accumulate for all expenses
     if (categoryTotals[exp.category] !== undefined) {
       categoryTotals[exp.category] += exp.amount;
@@ -45,7 +45,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!desc.trim() || !amount || parseFloat(amount) <= 0) return;
-    
+
     if (editingId) {
       editExpense(editingId, {
         description: desc,
@@ -57,7 +57,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
     } else {
       addExpense(desc, parseFloat(amount), category, paidBy);
     }
-    
+
     setDesc('');
     setAmount('');
   };
@@ -86,7 +86,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem' }}>
-      
+
       {/* HEADER ACTION BAR */}
       <div className="cyber-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
@@ -111,7 +111,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
               </div>
               <DollarSign size={32} color="var(--neon-cyan)" style={{ opacity: 0.5 }} />
             </div>
-            
+
             <div className="cyber-card" style={{ borderLeft: '4px solid var(--neon-purple)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--cyber-gray)', fontFamily: 'var(--font-hud)' }}>RIFAAS LIFETIME SPENDING</div>
@@ -125,7 +125,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
 
           {/* TOP SUMMARY PANELS */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
-            
+
             <div className="cyber-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ fontSize: '0.75rem', color: 'var(--cyber-gray)', fontFamily: 'var(--font-hud)' }}>TOTAL UNSETTLED BILLS</div>
               <div style={{ fontSize: '2rem', fontWeight: 'bold', fontFamily: 'var(--font-mono)', color: '#fff', textShadow: '0 0 5px rgba(255,255,255,0.2)' }}>
@@ -181,21 +181,21 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
 
           {/* LOWER LAYOUT: INPUT FORM & LISTING */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem' }}>
-            
+
             {/* Add Expense Form */}
             <div className="cyber-card">
               <h3 style={{ fontFamily: 'var(--font-hud)', color: editingId ? 'var(--neon-pink)' : '#fff', marginBottom: '1rem', letterSpacing: '0.5px' }}>
                 {editingId ? '✏️ MODIFY TRANSACTION' : '➕ DEPLOY TRANSACTION'}
               </h3>
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                
+
                 <div>
                   <label style={{ fontSize: '0.75rem', color: 'var(--cyber-gray)', display: 'block', marginBottom: '0.25rem', fontFamily: 'var(--font-hud)' }}>DESCRIPTION</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="e.g. WiFi Bill, Milk pack..." 
-                    className="cyber-input" 
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. WiFi Bill, Milk pack..."
+                    className="cyber-input"
                     value={desc}
                     onChange={(e) => setDesc(e.target.value)}
                   />
@@ -204,22 +204,22 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
                   <div>
                     <label style={{ fontSize: '0.75rem', color: 'var(--cyber-gray)', display: 'block', marginBottom: '0.25rem', fontFamily: 'var(--font-hud)' }}>AMOUNT (₹)</label>
-                    <input 
-                      type="number" 
-                      required 
-                      min="0.01" 
+                    <input
+                      type="number"
+                      required
+                      min="0.01"
                       step="0.01"
-                      placeholder="800" 
-                      className="cyber-input" 
+                      placeholder="800"
+                      className="cyber-input"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                     />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.75rem', color: 'var(--cyber-gray)', display: 'block', marginBottom: '0.25rem', fontFamily: 'var(--font-hud)' }}>CATEGORY</label>
-                    <select 
-                      className="cyber-select" 
-                      value={category} 
+                    <select
+                      className="cyber-select"
+                      value={category}
                       onChange={(e) => setCategory(e.target.value)}
                       style={{ width: '100%', height: '38px' }}
                     >
@@ -235,16 +235,16 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
                 <div>
                   <label style={{ fontSize: '0.75rem', color: 'var(--cyber-gray)', display: 'block', marginBottom: '0.25rem', fontFamily: 'var(--font-hud)' }}>PAID BY</label>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => setPaidBy('Sameer')}
                       className={`cyber-btn ${paidBy === 'Sameer' ? 'cyber-btn' : 'cyber-btn-secondary'}`}
                       style={{ flex: 1, fontSize: '0.75rem', padding: '0.5rem' }}
                     >
                       Sameer
                     </button>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => setPaidBy('Rifaas')}
                       className={`cyber-btn ${paidBy === 'Rifaas' ? 'cyber-btn-purple' : 'cyber-btn-secondary'}`}
                       style={{ flex: 1, fontSize: '0.75rem', padding: '0.5rem' }}
@@ -270,7 +270,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
             {/* Expense History Table */}
             <div className="cyber-card">
               <h3 style={{ fontFamily: 'var(--font-hud)', color: '#fff', marginBottom: '0.5rem' }}>📜 TRANSACTION HISTORY LOGS</h3>
-              
+
               <div style={{ maxHeight: '310px', overflowY: 'auto' }}>
                 <table className="cyber-table">
                   <thead>
@@ -308,7 +308,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
                             <button onClick={() => startEdit(exp)} style={{ background: 'transparent', border: 'none', color: 'var(--neon-cyan)', cursor: 'pointer' }}>
                               <Edit2 size={14} />
                             </button>
-                            <button onClick={() => { if(window.confirm('Delete this expense?')) deleteExpense(exp.id); }} style={{ background: 'transparent', border: 'none', color: 'var(--neon-pink)', cursor: 'pointer' }}>
+                            <button onClick={() => { if (window.confirm('Delete this expense?')) deleteExpense(exp.id); }} style={{ background: 'transparent', border: 'none', color: 'var(--neon-pink)', cursor: 'pointer' }}>
                               <Trash2 size={14} />
                             </button>
                           </div>
@@ -328,15 +328,15 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
           {/* CATEGORY SPENDING CHARTS */}
           <div className="cyber-card" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', alignItems: 'center' }}>
             <div>
-              <CustomChart 
-                type="bar" 
-                title="Expense category breakdown" 
-                data={categoryData} 
-                labels={categories} 
-                color="var(--neon-cyan)" 
+              <CustomChart
+                type="bar"
+                title="Expense category breakdown"
+                data={categoryData}
+                labels={categories}
+                color="var(--neon-cyan)"
               />
             </div>
-            
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <h4 style={{ fontFamily: 'var(--font-hud)', color: '#fff', fontSize: '0.9rem', marginBottom: '0.5rem', borderBottom: '1px solid rgba(0,240,255,0.1)', paddingBottom: '0.25rem' }}>STATISTICAL READOUTS:</h4>
               {categories.map((cat, idx) => (
@@ -351,7 +351,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
       ) : (
         /* PRINTABLE INVOICE STYLE STATEMENT */
         <div className="cyber-card" style={{ background: '#fff', color: '#000', filter: 'none', border: '1px solid #000', padding: '2.5rem', borderRadius: '4px' }}>
-          
+
           {/* Invoice Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #000', paddingBottom: '1rem', marginBottom: '1.5rem' }}>
             <div>
@@ -437,7 +437,7 @@ export default function ExpensesView({ expenses, addExpense, settleExpenses, del
 
         </div>
       )}
-      
+
     </div>
   );
 }
